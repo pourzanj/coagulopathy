@@ -23,37 +23,19 @@ shinyUI(
     fluidRow(
       DT::dataTableOutput("mainTable")
     ),
-    
+
     sidebarLayout(
       # get patient chart vars
       sidebarPanel(
-        conditionalPanel(
-          condition = 'input.mainTable_row_last_clicked != null',
-          style = "overflow-y:scroll; max-height: 180px",
-          checkboxGroupInput('chartVars', 'Chart Vars To Plot:',c(""))
-        ),
-        conditionalPanel(
-            condition = 'input.mainTable_row_last_clicked != null',
-            style = "overflow-y:scroll; max-height: 180px",
-            checkboxGroupInput('labVars', 'Lab Vars To Plot:',c(""))
-        ),
-        conditionalPanel(
-            condition = 'input.mainTable_row_last_clicked != null',
-            style = "overflow-y:scroll; max-height: 180px",
-            checkboxGroupInput('outputVars', 'Output Vars To Plot:',c(""))
-        ),
-        conditionalPanel(
-            condition = 'input.mainTable_row_last_clicked != null',
-            style = "overflow-y:scroll; max-height: 180px",
-            checkboxGroupInput('inputVars', 'Input Vars To Plot:',c(""))
-        ),
+        uiOutput("selectVars",style = "overflow-y:scroll; max-height: 200px"),
+        actionButton("plot","Plot"),
         width=2
       ),
       mainPanel(
-        verbatimTextOutput('plot will go here')
+        #verbatimTextOutput("mainPlot")
+        plotOutput('mainPlot')
       )
     )
-    
     
 
   )
